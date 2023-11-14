@@ -12,8 +12,8 @@
 
 ## Competition experience
 
--2023 National University Student Mathematical Modeling Competition, Second Prize at Provincial Level
--2023 National University Student Mathematics Competition, Second Prize at Provincial Level
+- 2023 National University Student Mathematical Modeling Competition, Second Prize at Provincial Level
+- 2023 National University Student Mathematics Competition, Second Prize at Provincial Level
 
 ## Research experience
 
