@@ -17,15 +17,15 @@
 
 ## Research experience
 
--None
+- None
 
 ## Honors and Awards
 
--None
+- None
 
 ## Publications
 
--None
+- None
 
 ## Contact Information
 
