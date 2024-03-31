@@ -1,7 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN" style="font-size: 75;">
 <meta charset="utf-8">
 
+<!-- 获取当前视口的宽度并设置rem -->
+<script>
+    function resetHtmlView() {
+        document.documentElement.style.fontSize = screen.width / 50 + "px";
+        console.log(document.documentElement.style.fontSize);
+    };
+    resetHtmlView();
+
+</script>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gthelurd 顾然 (https://Gthelurd.github.io)</title>
@@ -14,7 +23,7 @@
 
     .image-container {
       /* float: right; */
-      float: left;
+      float: right;
       margin: 25px;
     }
 
