@@ -1,15 +1,86 @@
 <!DOCTYPE html>
 <html>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <head>
   <meta charset="utf-8">
   <title>Competition experience</title>
 </head>
-<div class="navbar">
-  <ul>
-    <li><a class="active" href="index.html">Home 主页</a></li>
-  </ul>
-</div>
+
+<!-- 文字自适应 -->
+<script>
+  (function (doc, win) {
+    var docEl = doc.documentElement,
+      resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+      recalc = function () {
+        var clientWidth = docEl.clientWidth;
+        if (!clientWidth) return;
+        docEl.style.fontSize = 7 * (clientWidth / 320) + 'px';
+
+      };
+    if (!doc.addEventListener) return;
+    win.addEventListener(resizeEvt, recalc, false);
+    doc.addEventListener('DOMContentLoaded', recalc, false);
+  })(document, window);
+</script>
+
+
+<!-- 获取当前视口的宽度并设置rem -->
+<script>
+  function resetHtmlView() {
+    document.documentElement.style.fontSize = screen.width / 50 + "px";
+    console.log(document.documentElement.style.fontSize);
+  };
+  resetHtmlView();
+</script>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gthelurd 顾然 (https://Gthelurd.github.io)</title>
+
+  <!-- 图片自适应 -->
+  <!-- desktop:1600 x 1232 720x 1280，1080 x 1920-->
+  <!-- off-desktop:1170 x 1280 -->
+  <!-- phone:750 x 1334，1125 x 2436，1242 x 220 -->
+  <style>
+    .image-container {
+      /* float: right; */
+      float: right;
+      margin: 0.5px;
+    }
+
+    @media only screen and (max-width: 1152px) {
+      img {
+        max-width: 50vw;
+        width: 30vw;
+        height: auto;
+        max-height: 100vh;
+      }
+
+      body {
+        background-color: gainsboro;
+      }
+    }
+
+    @media only screen and (min-width: 1152px) {
+      img {
+        width: 30vw;
+        max-width: 50vw;
+        height: auto;
+        max-height: 100vh;
+      }
+
+      body {
+        background-color: gray;
+      }
+    }
+  </style>
+  <div class="navbar">
+    <ul>
+      <li><a class="active" href="index.html">Home 主页</a></li>
+    </ul>
+  </div>
+
 <body>
   <h2>Competition experience</h2>
   <ul>
@@ -19,4 +90,5 @@
     <p>2023 National University Student Mathematics Competition, Second Prize at Provincial Level</p>
   </ul>
 </body>
+
 </html>
