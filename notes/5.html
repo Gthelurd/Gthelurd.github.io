@@ -63,9 +63,8 @@
     <body>
     <div class="container">
     <h1>Your IP Information</h1>
-    <pre id="ipInfo">IP: 223.73.111.148<br>Network: 223.73.110.0/23<br>City: Shenzhen<br>Country: China (CN)<br>Continent: AS<br>Time Zone: Asia/Shanghai (UTC Offset: +0800)<br>Latitude: 22.54554<br>Longitude: 114.0683<br>ASN: AS56040<br>Organization: China Mobile communications corporation</pre>
-    <!-- <h2>Telegram Server Status</h2>
-    <pre id="telegramStatus">Error fetching Telegram server statuses.</pre> -->
+    <pre id="ipInfo">Please wait to connect the url_link...</pre>
+    <!-- <h2>Telegram Server Status</h2> <pre id="telegramStatus">Error fetching Telegram server statuses.</pre> -->
     </div>
     <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -103,7 +102,7 @@
                 fetchTelegramDCStatus();
             });
     
-            <!-- async function fetchTelegramDCStatus() {
+             async function fetchTelegramDCStatus() {
                 try {
                     const response = await fetch('https://raw.githubusercontent.com/OctoGramApp/assets/master/DCStatus/dc_status.json');
                     if (!response.ok) {
@@ -129,7 +128,7 @@
                     document.getElementById('telegramStatus').innerText = 'Error fetching Telegram server statuses.';
                 }
             }
-        </script> -->
+        </script> 
     
     
     <deepl-input-controller></deepl-input-controller><webchatgpt-custom-element-7a23fa96-ce8a-49b9-9084-95cf74f1c426 id="webchatgpt-snackbar" style="color: rgb(255, 255, 255);"></webchatgpt-custom-element-7a23fa96-ce8a-49b9-9084-95cf74f1c426></body></html>
