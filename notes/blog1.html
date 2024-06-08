@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lets see the jacobian matrix in Inversek Kinematics</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<h1
+id="使用雅可比矩阵求解机械臂运动学逆解算问题">使用雅可比矩阵求解机械臂运动学逆解算问题</h1>
+<p>在这个以及后面的一些博客里，我们将会讲解运动学逆解算问题(IK问题)-当然，大部分是使用雅可比矩阵来求解的。尽管这个方法应该有许多计算，但是我们可以仅仅把必要的理论展示出来；不需要多少计算，只要一些微积分、矩阵运算、矢量叉乘等运算方式的知识，我们就可以进入讲解了。（当然，还需要理解一些欧式变换的矩阵形式，比如平移，旋转，仿射变换等）</p>
+<p>首先，我们在这一页会讲解基础的运动学正解算和逆解算的式子，然后下一页我们会讨论一些雅可比矩阵的意义（比如雅可比矩阵的逆）来解决这些问题。</p>
+<h2 id="所以什么是运动学逆解算问题">所以什么是运动学逆解算问题?</h2>
+<p>广义上来说，可以参考论文<a
+href="https://www.researchgate.net/publication/273166356_Inverse_Kinematics_a_review_of_existing_techniques_and_introduction_of_a_new_fast_iterative_solver">Inverse
+Kinematics: a review of existing techniques and introduction of a new
+fast iterative solver</a>。</p>
+<p>也就是说，IK问题能够让物体从一个位置移动到另一个位置。比如你想拿起桌子上的一杯水，你的大脑就会解算一系列抽象的运动学逆解问题：比如如何移动你的肩关节，肘关节，和手腕来让你的手到达水杯所在的位置。</p>
+<p>在机器人运动学中，机械臂的控制就需要这一系列运动学逆解算。这里的IK问题，指的是Inverse
+Kinematics问题，正好是Forward Kinematics问题的逆命题。</p>
+<figure>
+<img src="../image/blog1_ik_vs_fk.jpg" alt="blog1_ik_vs_fk" />
+<figcaption aria-hidden="true">blog1_ik_vs_fk</figcaption>
+</figure>
+<p>假如我们有一个2D平面内的多连杆机械臂并由许多可旋转的关节组成，终端为机械夹爪或者其他操作工具（比如铣刀等）。</p>
+<p>同时假设每一个机械臂关节的关节角 <span
+class="math inline">\(\theta_i\)</span> 和杆长 <span
+class="math inline">\(L\)</span> 最终就能计算得出终端位置 <span
+class="math inline">\(\mathbf{r}_e\)</span> 。
+这就是运动学正向问题(Forward Kinematics).</p>
+<p>那么同理，你应该可以很容易得出运动学逆解算(Inverse
+Kinematics):已知终端位置 <span
+class="math inline">\(\mathbf{r}_e\)</span> 应该如何计算出每一个关节角
+<span class="math inline">\(\theta_i\)</span> 来达到终端位置。</p>
+<p>易知，运动学正解问题(FK问题)只有一个解(unique
+solution)，但是运动学逆解算(IK问题)一般就不只有一个解(Many
+solutions)。</p>
+<figure>
+<img src="..\image\blog1_ik_multiple_solutions.jpg"
+alt="blog1_ik_mutiple_solutions" />
+<figcaption aria-hidden="true">blog1_ik_mutiple_solutions</figcaption>
+</figure>
+<p>由于对称性，我们就可以到达相同的位置有许多不同的解法，这样我们就会得到多解问题。下面我们就将数学描述一下机械臂，建立相关的数学模型:</p>
+<h1 id="定义坐标系中的机械臂">定义坐标系中的机械臂</h1>
+<p>我们机械臂中有许多旋转的部分，那么我们自然想到为每个关节定义一个坐标系:</p>
+<figure>
+<img src="..\image\blog1_ik_coordinate_systems.jpg"
+alt="blog1_ik_coordinate_systems.jpg" />
+<figcaption
+aria-hidden="true">blog1_ik_coordinate_systems.jpg</figcaption>
+</figure>
+<p>这种情况下，我们每一个关节都是自己坐标系下的远点，那么<span
+class="math inline">\(X1Y1\)</span>这个坐标系就是第一个关节的坐标系，
+<span class="math inline">\(X_1\)</span>沿着<span
+class="math inline">\(L_1\)</span>方向，同时第一个坐标系旋转了 <span
+class="math inline">\(\theta_1\)</span>
+角度，此后每个坐标系相同，不难有<span
+class="math inline">\(X_iY_i\)</span>长度<span
+class="math inline">\(L_i\)</span>，旋转了<span
+class="math inline">\(\theta_i\)</span>。</p>
+<p>接下来我们定义世界坐标系(Global coordinate system)<span
+class="math inline">\(X_0Y_0\)</span>，随后由欧式坐标变换矩阵可以得出:</p>
+<p><span class="math display">\[{}_0^3P={}_0^1T{}_1^2T{}_2^3T
+P_0\]</span></p>
+<p>其中由矩阵变换不难有:</p>
+<p><span class="math display">\[[{}^1_0
+T]=\begin{bmatrix}\cos\theta_1&amp;-\sin\theta_1&amp;0&amp;x_0\\
+\sin\theta_1&amp; \cos\theta_1&amp;0&amp;y_0\\
+0&amp;0&amp;1&amp;0\\
+0&amp;0&amp;0&amp;1
+\end{bmatrix}\]</span> <span class="math display">\[
+[{}^1_0 T]=\begin{bmatrix}
+\cos\theta_1 &amp;-\sin\theta_1 &amp; 0&amp; L_1\\
+\sin\theta_1&amp; \cos\theta_1&amp;0 &amp;0\\
+0&amp;0&amp;1&amp;0\\
+0&amp;0&amp;0&amp;1
+\end{bmatrix}
+\]</span> <span class="math display">\[
+[{}^1_0 T]=\begin{bmatrix}\cos\theta_1&amp;-\sin\theta_1&amp;0&amp;L_2\\
+\sin\theta_1&amp; \cos\theta_1&amp;0&amp;0\\
+0&amp;0&amp;1&amp;0\\
+0&amp;0&amp;0&amp;1
+\end{bmatrix}
+\]</span> <span class="math display">\[
+[P_0]=\begin{bmatrix}L_3 &amp;0 &amp;0 &amp;1\end{bmatrix}^T
+\]</span> 最终有结果:<span class="math inline">\(\mathbf{r}_e=[{}^1_0
+T][{}^2_1 T][{}^3_2 T][P_0]\)</span> # 雅可比矩阵前置 <img
+src="../image\blog1_ik_target.jpg" alt="blog1_ik_target.jpg" />
+我们目标是为了确定终端位置如何从一个位置<span
+class="math inline">\(\mathbf{r}_e\)</span>移动到另一个位置<span
+class="math inline">\(\mathbf{r}_t\)</span>，那么我们就有了一个微小的<span
+class="math inline">\(\Delta\mathbf{r}=\mathbf{r}_e-\mathbf{r}_t\)</span>，这样我们就可以引入雅可比矩阵来进行后面的的求解(其实也就是用每个关节角的改变<span
+class="math inline">\(\Delta \theta来进行终端位置的仿真)\)</span>了。 #
+雅可比矩阵
+雅可比矩阵可以用来处理多变量函数的斜率，使用矩阵形式；当然，雅可比矩阵很自然的会有如下构造:
+<span
+class="math display">\[\mathbf{\Delta}\mathbf{r}=\mathbf{J}\mathbf{\Delta}\mathbf{\theta}\]</span>
+但是<span
+class="math inline">\(\mathbf{J}\)</span>到底代表什么呢?在三维平面内，雅可比矩阵是一个<span
+class="math inline">\(3\times n\)</span> 的矩阵，n代表机械臂的个数: <img
+src="..\image\blog1_ik_jacobian.jpg" alt="ik_jacobian.jpg" />
+这个矩阵表示了机械臂末端位置坐标(x,y,z)关于每一个机械臂的关节角的变化。
+那么我们有:</p>
+<p><span class="math display">\[\Delta \overrightarrow{r}=\left\{
+\begin{matrix}\Delta x \\ \Delta y \\ \Delta
+z\end{matrix}\right\}=\begin{bmatrix}\frac{\partial x}{\partial
+\theta_1} &amp;\frac{\partial x}{\partial \theta_2} &amp;\cdots
+&amp;\frac{\partial x}{\partial \theta_n}\ \\\frac{\partial y}{\partial
+\theta_1} &amp;\frac{\partial y}{\partial \theta_2} &amp;\cdots
+&amp;\frac{\partial y}{\partial \theta_n}\ \\\frac{\partial z}{\partial
+\theta_1} &amp;\frac{\partial z}{\partial \theta_2} &amp;\cdots
+&amp;\frac{\partial z}{\partial \theta_n} \end{bmatrix}\left\{
+\begin{matrix}\Delta \theta_1 \\ \Delta \theta_2\\\vdots \\ \Delta
+\theta_n\end{matrix}\right\}=\left\{ \begin{matrix}\frac{\partial
+x}{\partial \theta_1}\Delta\theta_1 &amp;\frac{\partial x}{\partial
+\theta_2}\Delta\theta_2 &amp;\cdots &amp;\frac{\partial x}{\partial
+\theta_n}\Delta\theta_n \\\frac{\partial y}{\partial
+\theta_1}\Delta\theta_1 &amp;\frac{\partial y}{\partial
+\theta_2}\Delta\theta_2 &amp;\cdots &amp;\frac{\partial y}{\partial
+\theta_n}\Delta\theta_n \\\frac{\partial z}{\partial
+\theta_1}\Delta\theta_1 &amp;\frac{\partial z}{\partial
+\theta_2}\Delta\theta_2 &amp;\cdots &amp;\frac{\partial z}{\partial
+\theta_n}\Delta\theta_n\end{matrix}\right\} \]</span></p>
+<p>另一种解释为:
+这个雅可比矩阵运算的结果表示每一个机械臂的终端位置，比如下图中第一个，这个也就是<span
+class="math inline">\(\theta_1\)</span>的影响；下图所有的虚线分别表示改变<span
+class="math inline">\(\theta_i\)</span>导致末端位置的改变，箭头表示后面机械臂整体运算出的结果(可以视为这一个机械臂连杆旋转所经过的轨迹)。
+<img src="..\image\blog1_ik_derivatives.jpg" /></p>
+<p>不难发现，只要我们对终端位置(x,y,z)取关于每个关节角度<span
+class="math inline">\(\theta_i\)</span>的微分，那么我们最终属于是线性化了这个问题（也就是说，你只需要解一个线性方程组即可）。但是，这种方法因为所取为微分，所以对于较大角度的改变可能不是那么精确。</p>
+<p>那么我们应该如何得出雅可比矩阵的每个元素呢？，一种方式是通过欧式坐标变换矩阵来得到一个终端位置(x,y,z)关于每个关节角<span
+class="math inline">\(\theta_i\)</span>的函数:<span
+class="math inline">\(\mathbf{r}_e=f(\mathbf{\theta})=f(\theta_1,\theta_2,\theta_3,\cdots,\theta_n)\)</span>，这个式子我们已经在前面写出过了。</p>
+<p>那么另一种方法就是通过叉乘: <span
+class="math display">\[\frac{\partial \mathbf{r_e}}{\partial
+\theta_j}=\mathbf{a_j}\times (\mathbf{r_e}-\mathbf{r_j})\]</span>
+这里的<span
+class="math inline">\(\theta_j,\mathbf{r_j}\)</span>表示第j个关节的夹角与位置，<span
+class="math inline">\(\mathbf{a_j}\)</span>表示这个关节轴的旋转矢量。</p>
+<p>那么如果这么定义: <span
+class="math display">\[\mathbf{J}=\left[\begin{matrix}{\mathbf{a_1}\times
+(\mathbf{r_e}-\mathbf{r_1})}^T &amp;{\mathbf{a_2}\times
+(\mathbf{r_e}-\mathbf{r_2})}^T&amp;{\mathbf{a_3}\times
+(\mathbf{r_e}-\mathbf{r_3})}^T &amp;\cdots &amp;{\mathbf{a_n}\times
+(\mathbf{r_e}-\mathbf{r_n})}^T\\ \end{matrix}\right]\]</span>
+对于二维XY平面内的机械臂，旋转矢量始终指向Z轴方向，因此，我们旋转矢量<span
+class="math inline">\(\mathbf{a_j}=\alpha \hat{k}\)</span></p>
+<p>那么为了构造这种雅可比矩阵，我们需要使用一些求逆方法；当然，大部分雅可比矩阵都不是平方项，所以大部分不可逆；为了避免求逆问题的存在，我们需要使用广义逆-伪逆矩阵(当然我们不讲述这个，只是用来保证一定可以求逆即可)。</p>
+<p>我们通过逆矩阵就能写出: <span
+class="math display">\[\mathbf{J}^{-1}\mathbf{\Delta}\mathbf{r}=\mathbf{\Delta}\mathbf{\theta}\]</span>
+根据这个式子我们就不难得出每个关节角角度。</p>
+<h1 id="补充">补充</h1>
+<p>雅可比矩阵这里写下的<span class="math inline">\(3\times
+n\)</span>的形式其实是简化后的，这个形式一般只是用来得出终端位置。如果我们需要机械臂的终端位置与终端朝向，那么我们要使用<span
+class="math inline">\(6\times
+n\)</span>的形式，其中第4，5，6三行应该表示机械臂终端关于X,Y,Z轴旋转的过程。</p>
+<p>当然，我们就可以给出映射关系(相应的眼科比矩阵的第i列表示): <span
+class="math display">\[\mathbf{J_i}=\left\{\begin{matrix}\begin{bmatrix}{}^BZ_i\\0\end{bmatrix}&amp;,i为移动关节\\\begin{bmatrix}{}^BZ_{i}\times
+({}^B_iR^{i}p_n)\\{}^BZ_{i}\end{bmatrix}&amp;,i为旋转关节\end{matrix}\right.\]</span>
+对于移动关节:<span
+class="math inline">\(Z_i\)</span>表示第i个坐标系中Z轴单位向量在基坐标系{0}中的表示。
+对于转动关节:<span
+class="math inline">\({}^BZ_{i-1}\)</span>表示是坐标系{i}的z轴单位向量在基座标系{0}中的表示。
+<span
+class="math inline">\(p_{in}^0={}^B_iR^ip_n\)</span>表示末端坐标原点相对坐标系{i}的位置矢量在基座标系{0}中的表示。</p>
+</body>
+</html>
