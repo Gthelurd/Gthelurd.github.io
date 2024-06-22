@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Untitled</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<h1 id="steamdeck-使用感受">Steamdeck 使用感受</h1>
+<p><img src="..\image\blog2_steamdeck.png" alt=".._steamdeck.png" />
+Steamdeck使用独特的SteamOS，基于ArchLinux改版得出的(个人猜测，未经验证)。<br>
+这个掌机的使用者对象应该是具有以下特征的: <br>-
+对便携性高性能设备有需求的用户 <br>- Steam库拥有较多游戏容量的用户 
+<h4>1.steamdeck兼容问题</h4>
+SteamOS使用proton兼容层调用windowsAPI来进行.exe游戏文件运行。
+所以SteamOS大部分支持有Value社认证标志的游戏，这里我会推荐protonDB，这是一个致力于让Windows游戏运行在linux上的社区，它的认证游戏多于Value社认证的游戏，我们使用proton就能兼容更多的游戏。
+<img src="..\image\blog2_protondb.png" alt="..\image_protondb.jpg" />
+那么应该如何使用protonDB呢，有两种方法: <br>-
+1.proton_QT+protontricks(红酒杯) <br>-
+2.portproton:这个似乎是steam最近添加进来的，可以直接通过proton或者wine进行.exe游戏的驱动，安装如下图(portproton官网找的图，找的是俄语版本)
+<img src="..\image\blog2_protononsteamdeck.png"
+alt="..\image_protononsteamdeck.png" />
+<h4>2.steamdeck运行非linux下的游戏</h4>
+从B站上面搜索一些steamdeck移植游戏视频，可以看出，大部分steam游戏只需要导入steam即可启动，但是大部分导入都是通过steam调用兼容层来运行，对于使用其他启动器(EA,EPIC,R星)的游戏可能会导致使用困难。
+例如:<a
+href="https://ottercorp.github.io/faq/steamdeck">SteamDeck运行最终幻想14</a>
+<h4>3.steamdeck性能使用体验评测</h4>
+Steamdeck已经被部分中国用户评测为”黄油启动利器”，那么我们不难根据这一项进行使用proton对于模拟结果的运行评测。
+<img src="../image/blog2_userthoughts.jpg"
+alt="../image/blog2_userthoughts.jpg" />
+<p>SD内自带的discover商店搜索portproton进行下载后运行上述视频提供的游戏的结果:<br>
+</p>
+<table>
+    <tr>
+        <th>名称</th>
+        <th>兼容层</th>
+        <th>CPU-GPU</th>
+        <th>电源功率</th>
+    </tr>
+    <tr>
+        <td>AIdealRays</td>
+        <td>PROTON_LG_9-4</td>
+        <td>68%-100%</td>
+        <td>23.2W</td>
+    </tr>
+    <tr>
+        <td>AliceInCradle</td>
+        <td>WINE-PROTON-GE</td>
+        <td>42%-50%</td>
+        <td>16.1W</td>
+    </tr>
+    <tr>
+        <td>DonaDona</td>
+        <td>PROTON_LG_9-4</td>
+        <td>没测</td>
+        <td>没测</td>
+    </tr>
+</table>
+<p>功率大概上下飘动26W左右。 # 我们使用的链接: <a
+href="https://github.com/dzianismaroz/sd-port-proton">Github一份教程</a>
+<a
+href="https://flathub.org/apps/ru.linux_gaming.PortProton">Linux下flathub下载</a>
+<a
+href="https://alancorn.github.io/blogs/2022/GamingWithWine.html">一些相似的评测</a>
+<a href="https://linux-gaming.ru/">portproton官网.ru</a></p>
+</body>
+</html>
