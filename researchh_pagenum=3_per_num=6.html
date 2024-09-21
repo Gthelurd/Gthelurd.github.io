@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>个人博客</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    .page {
+      background-color: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    h3 {
+      color: #333;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #666;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .container {
+      width: 100%;
+      margin: auto;
+      overflow: hidden;
+    }
+
+    #header {
+      background: #50a8a8;
+      color: white;
+      padding-top: 30px;
+      min-height: 70px;
+      border-bottom: #e8491d 3px solid;
+    }
+
+    #header h1 {
+      font-size: 50px;
+      text-align: center;
+      padding: 10px 0;
+      line-height: 1.2em;
+    }
+
+    #nav {
+      float: left;
+      width: 20%;
+      height: 300px;
+      background: #ccc;
+      padding: 20px;
+    }
+
+    #nav ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #section {
+      float: left;
+      width: 79%;
+      padding: 15px;
+      overflow: hidden;
+    }
+
+    #footer {
+      background: #50a8a8;
+      text-align: center;
+      color: white;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    ul.pagination {
+      display: inline-block;
+      padding: 0;
+      margin: 0;
+    }
+
+    ul.pagination li {
+      display: inline;
+    }
+
+    ul.pagination li a {
+      color: black;
+      float: left;
+      padding: 8px 16px;
+      text-decoration: none;
+      transition: background-color .3s;
+      border: 1px solid #ddd;
+    }
+
+    ul.pagination li a.active {
+      background-color: #4CAF50;
+      color: white;
+      border: 1px solid #4CAF50;
+    }
+
+    ul.pagination li a:hover:not(.active) {
+      background-color: #ddd;
+    }
+
+    div.center {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="header" class="container">
+    <h1>个人博客</h1>
+    <h3>欢迎来到我的博客</h3>
+    <p>在这里，我会分享我的想法、经验和学习笔记。希望你在这里能找到有价值的内容。</p>
+
+  </div>
+  <!-- <div id="nav" class="container">
+        <ul>
+            <li><a href="#">首页</a></li>
+            <li><a href="#">关于我</a></li>
+            <li><a href="#">联系我</a></li>
+        </ul>
+    </div> -->
+  <!-- <div class="page"> -->
+  <!-- <h3>欢迎来到我的博客</h3>
+    <p>在这里，我会分享我的想法、经验和学习笔记。希望你在这里能找到有价值的内容。</p> -->
+  <!-- </div> -->
+
+  <!-- 内容部分 -->
+  </div>
+  <div class="page">
+    <h3><a href="./notes/blog4.html">2024/6/27/近期编程界的一些瓜。</a></h3>
+    <p>
+      Gitcode开始镜像Github上的大量项目，同时为项目拥有者直接创建个人主页；但是这一操作并不会通知到项目所有者；
+      <br>AtomHub镜像开始使用，Docker被墙......
+    </p>
+  </div>
+  <div class="page">
+    <h3><a href="./OtherFunnyThings/ascii-art-converter/index.html">图片转Ascii</a></h3>
+    <p>
+      上传图片，用来转换为ASCII的TXT文本，推荐使用的是对比度比较高，同时图片背景与你所需要转换的物体有相对明显的区分。
+      <br>尝试ascii-art-convert......
+    </p>
+  </div>
+  <div class="page">
+    <h3><a href="./notes/blog5.html">器学习中的Dropout+BN操作为什么有时候会导致训练结果变差</a></h3>
+    <p>
+      众所周知，Dropout与BranchNorm都是机器学习中防止过拟合的经典trick，但是有的时候添加起来效果并不很好。
+      <br>在做 Lihongyi_HW1 时，我尝试了 dropout 层，但是发现只要添加后就会让
+      Loss 跑飞，详细如下......
+    </p>
+  </div>
+
+  <!-- <div class="page">
+    <h3>未来目标</h3>
+    <p>对于未来，我希望能够运用所学的知识和技能，为社会的自动化进程做出积极的贡献。我渴望能够参与到智能制造、人工智能等领域的发展中，利用自动化技术来改善人们的生活。同时，我也会不断学习和提升自己，保持对新技术的热爱和学习能力。
+    </p>
+  </div> -->
+
+
+  <ul class="pagination">
+    <li><a href="./research.html">«</a></li>
+    <li><a href="./research.html">1</a></li>
+    <li><a href="./research_pagenum=2.html">2</a></li>
+    <li><a class="active" href="./research_pagenum=3_per_num=6.html">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li><a href="#">6</a></li>
+    <li><a href="#">7</a></li>
+    <li><a href="./researchh_pagenum=3_per_num=6.html">»</a></li>
+  </ul>
+
+  <div id="footer" class="container">
+    <p>版权所有 &copy; 个人博客</p>
+  </div>
+</body>
+
+</html>
