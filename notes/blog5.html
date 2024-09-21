@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Untitled</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<h2
+id="机器学习中的dropoutbn操作为什么有时候会导致训练结果变差">机器学习中的Dropout+BN操作为什么有时候会导致训练结果变差</h2>
+<h3
+id="pre-机器学习认为神经网络拟合的结果有用的原因是相信训练集和测试集独立同分布">Pre:
+机器学习认为神经网络拟合的结果有用的原因是相信训练集和测试集独立同分布。</h3>
+<h4 id="dropout-层">1.Dropout 层</h4>
+<p>相关链接:<a
+href="https://www.kaggle.com/competitions/commonlitreadabilityprize/discussion/260729">The
+magic of NO dropout</a></p>
+<p>在做 Lihongyi_HW1 时，我尝试了 dropout 层，但是发现只要添加后就会让
+Loss 跑飞，详细如下： <img src="../image/blog5/HW1.png" alt="HW1.png" />
+那么我的结果就是： <img src="../image/blog5/score_hw1.png"
+alt="HW1_scores.jpg" /> 但是在这个分类任务中，我发现 dropout
+层可以很好的防止过拟合，并且可以显著提高准确率，详细请看模型结构中的 FC
+全连接层。</p>
+<p>note：NN.regression task and NN. classification are different.</p>
+<h6 id="dropout-的数学原理">Dropout 的数学原理</h6>
+<p>考虑简单的线性神经网络: <img src="../image/blog5/Linear_network.png"
+alt="线性神经网络" /> 可以看出他的输出为:</p>
+<p><span class="math display">\[
+O = \sum_{i}^n w_i I_i
+\]</span></p>
+<p>对于无 Dropout 的网络，如果 t 是目标值:</p>
+<p><span class="math display">\[
+E_{N}=\frac{1}{2}\left(t-\sum_{i=1}^{n} w_{i}^{\prime} I_{i}\right)^{2}
+\]</span></p>
+<p><span class="math inline">\(\omega&#39;\)</span>
+是为了找到之后要介绍的加入 Dropout 的网络的关系，其中 <span
+class="math inline">\(\omega&#39;=p\omega\)</span> 。</p>
+<p><span class="math display">\[
+E_N = \frac{1}{2}\left(t-\sum_{i=1}^{n} p_i w_{i} I_{i}\right)^{2}
+\]</span></p>
+<p><span class="math display">\[
+\frac{\partial E_{N}}{\partial w_{i}}=-t p_{i} I_{i}+w_{i} p_{i}^{2}
+I_{i}^{2}+\sum_{j=1, j \neq i}^{n} w_{j} p_{i} p_{j} I_{i} I_{j}
+\]</span></p>
+<p>当我们添加 Dropout 之后可知：假设丢失率$(p) $服从伯努利分布，即它有 p
+的概率值为 1 ， 1-p 的概率值为 0 。 那么</p>
+<p><span class="math display">\[
+E_{D}=\frac{1}{2}\left(t-\sum_{i=1}^{n} \delta_i w_{i} I_{i}\right)^{2}
+\]</span></p>
+<p><span class="math display">\[
+\frac{\partial E_{D}}{\partial w_{i}}=-t \delta_{i} I_{i}+w_{i}
+\delta_{i}^{2} I_{i}^{2}+\sum_{j=1, j \neq i}^{n} w_{j} \delta_{i}
+\delta_{j} I_{i} I_{j}
+\]</span></p>
+<p><span class="math display">\[
+\begin{aligned} E\left[\frac{\partial E_{D}}{\partial w_{i}}\right]
+&amp;=-t p_{i} I_{i}+w_{i} p_{i}^{2} I_{i}^{2}+w_{i}
+\operatorname{Var}\left(\delta_{i}\right) I_{i}^{2}+\sum_{j=1, j \neq
+i}^{n} w_{j} p_{i} p_{j} I_{i} I_{j} \\ &amp;=\frac{\partial
+E_{N}}{\partial w_{i}}+w_{i} \operatorname{Var}\left(\delta_{i}\right)
+I_{i}^{2} \\ &amp;=\frac{\partial E_{N}}{\partial w_{i}}+w_{i} p_i
+\left(1 - p_{i}\right) I_{i}^{2} \end{aligned}
+\]</span></p>
+<p>我们可以看出，在 <span
+class="math inline">\(\omega&#39;=p\omega\)</span>的前提下，带有 Dropout
+的网络的梯度的期望等价于带有正则的普通网络。换句话说，Dropout
+起到了正则的作用，正则项为\( w _ i p_i (1 - p _ {i}) I_i^{2}\) 。</p>
+<h6 id="那么为什么会这样呢">那么为什么会这样呢？</h6>
+<blockquote>
+<p>没有添加 Dropout 的网络是需要对网络的每一个节点进行学习的，而添加了
+Dropout 之后的网络层只需要对该层中没有被 Mask 掉的节点进行训练。
+也就是说，Dropout 层添加后改变了输出的方差，而不改变输出的均值。</p>
+</blockquote>
+<p>考虑<span class="math inline">\(d \sim
+\text{Bernoulil}(p)\)</span>，那么对于输入的随机变量<span
+class="math inline">\(h\)</span>有： <span
+class="math display">\[h&#39;=\frac{1}{p}dh\]</span> 均值： <span
+class="math display">\[E(h&#39;)=\frac{1}{p}E(d)\cdot
+\mu_h=\mu_h\]</span> 方差： <span
+class="math display">\[Var(h&#39;)=E(h&#39;^2)-E(h&#39;)^2=\frac{1}{p^2}E(d^2)E(h^2)-\mu_h^2=\frac{1}{p}E（h^2）-\mu_h\]</span>
+那么到了这一步，我们就可以知道 dropout 会导致样本分布的整体偏移，在经过
+RELU
+非线性层的处理后，最终导致整个网络输出结果的偏移。训练结果（权重<span
+class="math inline">\(\omega\)</span>与偏移标量<span
+class="math inline">\(b_{\text{bias}}\)</span>）会适合于 dropout
+后的训练内容，而在未经过 dropout 的验证集中就不适合。</p>
+<p>回归任务中的评价函数一般都是loss，所以不适合添加dropout层。
+但是对于分类任务，输出结果是类别判断，往往是输出的一个范围值划分为一类，所以几乎不受影响。
+#### 2. BN层: 参考链接:<a
+href="https://www.zhihu.com/question/38102762/answer/85238569">什么是BatchNorm</a></p>
+<p>添加batchNorm是有效的。</p>
+<h6 id="batchnorm-的数学原理推导就是chain-rule-不详细写了">batchnorm
+的数学原理（推导就是chain rule 不详细写了）</h6>
+<h6 id="那么为什么会这样呢-1">那么为什么会这样呢？</h6>
+<blockquote>
+<p>BatchNorm1d\( (h_i)\) 批量归一化通过对 mini-batch
+中的数据进行标准化来定中间层的分布。 规定<span
+class="math inline">\(m=\text{batch}\)</span>,<span
+class="math inline">\(\gamma\)</span>与<span
+class="math inline">\(\beta\)</span>为可学习参数。</p>
+</blockquote>
+<p>批量归一化公式如下： <span class="math display">\[ \mu
+_{\text{batch}} = \frac{1}{m} \sum _{i=1}^{m} x_i \]</span> <span
+class="math display">\[ \sigma _{\text{batch}}^2 = \frac{1}{m} \sum
+_{i=1}^{m} (x_i - \mu _{\text{batch}})^2 \]</span> <span
+class="math display">\[ \hat{x}_i = \frac{x_i -
+\mu_{\text{batch}}}{\sqrt{{\sigma}_{\text{batch}}^2 + \epsilon}}
+\]</span> <span class="math display">\[ y _{i} = \gamma \hat{x} _{i} +
+\beta \]</span></p>
+<h6 id="batchnormdropout效果">batchnorm+Dropout效果</h6>
+<p>省流答案是会变差的，因为两者会导致验证集的方差不同。</p>
+</body>
+</html>
