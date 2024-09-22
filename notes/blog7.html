@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Sorting method</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<h2 id="c语言中的排序">C语言中的排序</h2>
+<h4 id="stdlib.h中自带的qsort">“stdlib.h”中自带的qsort</h4>
+<p>qsort函数定义如下</p>
+<pre class="c"><code>void qsort(void *base, // nums
+           size_t nitems, // sizeof(nums)/sizeof(nums[0])
+           size_t size,   // sizeof(nums[0])
+           int (*compar)(const void *, const void *));</code></pre>
+<p>如果你要使用他，那么你大概需要自己写一个cmp函数，输出应该为-1,0,1来告知qsort怎么排序。(1:升序,-1:降序)</p>
+<pre class="c"><code>int cmp_int(const void*_a,const void*_b)
+{
+    return *(int*)_a - *(int*)_b;
+}
+int cmp_char(const void*_a,const void*_b)
+{
+   return *(char*)_a - *(char*)_b;
+}
+int cmp_dob(const void*_a,const void*_b)
+{
+    return *(double*)_a &gt; *(double*)_b ? 1 : -1;
+}
+// 或者一劳永逸版本
+struct node{
+	int i;
+	double d;
+	char c;
+};
+int cmp(const void *a,const void *b) {
+	return (*(node*)a).i-(*(node*)b).i;
+}
+</code></pre>
+<p>具体实例：</p>
+<pre class="c"><code>// nums:[1,1,1,3,3,4,3,2,4,2]-&gt;[1,1,1,2,2,3,3,3,4,4]
+qsort(nums,NumSizes,sizeof(int),cmp_int);</code></pre>
+<h4 id="c语言中实现swap函数">C语言中实现swap()函数</h4>
+<p>C是没有自己的swap函数的，只能靠自己实现。</p>
+<pre class="c"><code>void swap(int *a,int *b)
+{
+    a ^= b ^= a ^= b; //仅限int型
+}
+
+void swap1(int &amp;a,int &amp;b)
+{
+    a = a + b;
+    b = a - b;
+    a = a - b;
+}
+
+void swap2(int &amp;a,int &amp;b) //创建临时变量，较为常用
+{
+    int tmp = b;
+    b = a;
+    a = tmp;
+}</code></pre>
+<h4 id="冒泡">冒泡</h4>
+<p>常见的算法，小元素上浮，大元素下沉，当一次排序中没有交换时说明数组已经排序完全。</p>
+<pre class="c"><code>void bubble_sort(int *nums,int numsSize)
+{
+    for(int i=0;i&lt;numsSize;i++)
+    {
+        for(int j=numsSize-1;j&gt;i;j--)
+        {
+            if(nums[j-1]&gt;nums[j])
+            {
+                swap(nums[j-1],nums[j]);
+            }
+        }
+    }
+}</code></pre>
+<h4 id="插入">插入</h4>
+<p>逐个处理待排序的记录，每个记录与前面已排序已排序的子序列进行比较，将它插入子序列中正确位置。</p>
+<pre class="c"><code>void insert_sort(int *nums,int numsSize)
+{
+    for(int i=0;i&lt;numsSize;i++)
+    {
+        for(int j=i;j&gt;1;j--)
+        {
+            if(nums[j-1]&gt;nums[j])
+            {
+                swap(nums[j-1],nums[j]);
+            }
+        }
+    }
+}</code></pre>
+<h4 id="选择">选择</h4>
+<p>次从未排序的序列中找到最小元素，放到未排序数组的最前面。</p>
+<pre class="c"><code>void select_sort(int *nums,int numsSize)
+{
+    for(int i=0;i&lt;numsSize;i++)
+    {
+        for(int j=i+1;j&lt;numsSize&gt;;j++)
+        {
+            if(nums[i]&gt;nums[j])
+            {
+                swap(nums[i],nums[j]);
+            }
+        }
+    }
+}</code></pre>
+<h4 id="快排">快排</h4>
+<p>这个推荐直接使用qsort，<span
+class="math inline">\(O(n\log{n})\)</span>复杂度都不用自己手搓。</p>
+<h4 id="归并">归并</h4>
+<pre class="cpp"><code>template&lt;class Elem&gt;
+void mergesortcore(Elem A[],Elem temp[],int i,int j)
+{
+    if(i == j)  return;
+    int mid = (i + j)/2;
+
+    mergesortcore(A,temp,i,mid);
+    mergesortcore(A,temp,mid + 1,j);
+
+    /*归并*/
+    int i1 = i,i2 = mid + 1,curr = i;
+    while(i1 &lt;= mid &amp;&amp; i2 &lt;= j){
+        if(A[i1] &lt; A[i2])
+            temp[curr++] = A[i1++];
+        else
+            temp[curr++] = A[i2++];
+    }
+    while(i1 &lt;= mid)
+        temp[curr++] = A[i1++];
+    while(i2 &lt;= j)
+        temp[curr++] = A[i2++];
+    for(curr = i;curr &lt;= j;curr++)
+        A[curr] = temp[curr];
+}
+
+template&lt;class Elem&gt;
+void mergesort(Elem A[],int sz)
+{
+    Elem *temp = new Elem[sz]();
+    int i = 0,j = sz - 1;
+    mergesortcore(A,temp,i,j);
+    delete [] temp;
+}</code></pre>
+<h4 id="堆">堆</h4>
+<pre class="cpp"><code>/********************************************
+ * 向堆中插入元素
+ *  hole：新元素所在的位置
+ ********************************************/
+template &lt;class value&gt;
+void _push_heap(vector&lt;value&gt; &amp;arr,int hole){
+    value v = arr[hole];//取出新元素，从而产生一个空洞
+    int parent = (hole - 1) / 2;
+    //建最大堆，如果建最小堆换成 arr[parent] &gt; value
+    while(hole &gt; 0 &amp;&amp; arr[parent] &lt; v){
+        arr[hole] = arr[parent];
+        hole = parent;
+        parent = (hole - 1) / 2;
+    }
+    arr[hole] = v;
+}
+
+/********************************************
+ * 删除堆顶元素
+ ********************************************/
+template &lt;class value&gt;
+void _pop_heap(vector&lt;value&gt; &amp;arr,int sz)
+{
+    value v = arr[sz - 1];
+    arr[sz - 1] = arr[0];
+    --sz;
+    int hole = 0;
+    int child = 2 * (hole + 1); //右孩子
+    while(child &lt; sz){
+        if(arr[child] &lt; arr[child - 1])
+            --child;
+        arr[hole] = arr[child];
+        hole = child;
+        child = 2 * (hole + 1);
+    }
+    if(child == sz){
+        arr[hole] = arr[child - 1];
+        hole = child - 1;
+    }
+    arr[hole] = v;
+    _push_heap(arr,hole);
+}
+
+/********************************************
+ * 建堆
+ *  sz：删除堆顶元素后的大小
+ *  v： 被堆顶元素占据的位置原来的元素的值
+ ********************************************/
+template &lt;class value&gt;
+void _make_heap(vector&lt;value&gt; &amp;arr)
+{
+    int sz = arr.size();
+    int parent = (sz - 2) / 2;
+    while(parent &gt;= 0){
+        int hole = parent;
+        int child = 2 * (hole + 1); //右孩子
+        value v = arr[hole];
+        while(child &lt; sz){
+            if(arr[child] &lt; arr[child - 1])
+                --child;
+            arr[hole] = arr[child];
+            hole = child;
+            child = 2 * (hole + 1);
+        }
+        if(child == sz){
+            arr[hole] = arr[child - 1];
+            hole = child - 1;
+        }
+        arr[hole] = v;
+        _push_heap(arr,hole);
+        --parent;
+    }
+}
+
+template &lt;class value&gt;
+void heap_sort(vector&lt;value&gt; &amp;arr)
+{
+    _make_heap(arr);
+    for(int sz = arr.size();sz &gt; 1;sz--)
+        _pop_heap(arr,sz);
+}</code></pre>
+</body>
+</html>
