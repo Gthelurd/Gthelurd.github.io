@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>ChainedList</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<h2 id="leetcode链表刷题有感">leetcode【链表】刷题有感</h2>
+<p><a
+href="https://leetcode.cn/problemset/?page=1&amp;topicSlugs=linked-list">链表标签</a>在
+leetcode 一共有 「110 道题」。</p>
+<p>相对常见的链表结构：</p>
+<pre class="plaintext"><code>interface ListNode&lt;T&gt; {
+  data: T;         // 数据域，存放数据。
+  next: ListNode;  // 指向下一个节点的指针。
+  pre : ListNode;  // 指向上一个节点，单链表没有。
+}</code></pre>
+<blockquote>
+<p>当然，本文主要基于C语言以及单向链表撰写。如果你把链表叫成是单叉树的话。</p>
+</blockquote>
+<p>这是要删除的文本</p>
+<h4 id="基本操作以及时间复杂度">基本操作以及时间复杂度</h4>
+<p>这是要删除的文本</p>
+<h6 id="添加节点尾插入插入节点">添加节点(尾插入)/插入节点</h6>
+<p>假如现在的节点为head-&gt;node1-&gt;node2-&gt;node3-&gt;NULL;
+现插入新建节点node4到node3后(尾插)且各指针已给定(<span
+class="math inline"><em>T</em>(<em>n</em>) = <em>O</em>(1)</span>):</p>
+<pre class="c"><code>struct ListNode *node4 = NULL;
+node3-&gt;next = node4;
+node4-&gt;next = NULL:</code></pre>
+<p>假设有节点p需要插入到node2与node3之间且指针未给出(<span
+class="math inline"><em>T</em>(<em>n</em>) = <em>O</em>(<em>n</em>)</span>):
+先遍历节点找到待插入位置的前置节点。</p>
+<pre class="c"><code>struct ListNode *tmp = node2-&gt;next;
+node2-&gt;next = p;
+p-&gt;next = tmp;</code></pre>
+<h6 id="查找节点修改节点dfs遍历">查找节点/修改节点(dfs遍历)</h6>
+<p>首先肯定是要遍历,其次无论是值比较还是索引查找，都需要<span
+class="math inline"><em>O</em>(<em>n</em>)</span></p>
+<pre class="c"><code>for (struct ListNode *cur = head; cur != null; cur = cur.next,i++) {
+    if(cur.val==target||i==id)
+    {return cur;}
+}</code></pre>
+<h6 id="删除节点">删除节点</h6>
+<p>假如现在的节点为head-&gt;node1-&gt;node2-&gt;node3-&gt;NULL;
+删除node2节点: 未给出指针需要先遍历节点找到待删除位置的前置节点(<span
+class="math inline"><em>O</em>(<em>n</em>)</span>)。</p>
+<pre class="c"><code>node1-&gt;next = node1-&gt;next-&gt;next;</code></pre>
+<h4 id="做题技巧">做题技巧</h4>
+<p>新手多画图！ 下面是一些常见的操作技巧:</p>
+<h6 id="快慢指针环">快慢指针/环</h6>
+<p>例如Floyd判断环算法: <img src="../image/blog6/flody_circle.jpg" />
+考虑分别从A点出发，在环上的C点相遇，那么我们有: <span
+class="math display"><em>L</em><sub>fast</sub> = 2<em>L</em><sub>slow</sub> = 2(<em>m</em> + <em>k</em>)</span>
+<span
+class="math display"><em>L</em><sub>slow</sub> = <em>m</em> + <em>k</em> + <em>n</em></span>
+直接给出结论: <span
+class="math display"><em>m</em> + <em>k</em> = <em>n</em></span></p>
+<pre class="c"><code>bool hasCycle(struct ListNode *head) {
+    if (head-&gt;next == NULL||head == NULL)
+    return false;
+    struct ListNode* slow = head;
+    struct ListNode* fast = head-&gt;next;
+    while(slow != fast)
+    {
+        if(fast == NULL||fast-&gt;next == NULL)
+        return false;
+        slow = slow-&gt;next;
+        fast = fast-&gt;next-&gt;next;
+    }
+    return true;
+}</code></pre>
+<h6 id="虚拟头">虚拟头</h6>
+<p>主要用于储存这一链表的起始点，后续操作时不丢失链表。</p>
+<pre class="c"><code>struct ListNode *ans;
+ans-&gt;next = head;</code></pre>
+<h6 id="穿针引线拼接链表">穿针引线/拼接链表</h6>
+<p>主要用于连接k段链表，合并多段链表到一个链表。
+比如有head-&gt;node1-&gt;a-&gt;b-&gt;node2-&gt;NULL;
+和c-&gt;node3-&gt;node4-&gt;dNULL; 将cd，放入ab之间。</p>
+<pre class="c"><code>a-&gt;next = c;
+d-&gt;next = b;</code></pre>
+<h6 id="先传再排后判空">先传再排后判空</h6>
+<p>判断顺序，排空可以最后考虑。</p>
+<h4 id="题目类型">题目类型</h4>
+<p>这是要删除的文本</p>
+<h6 id="边界">边界</h6>
+<p>主要是判空。</p>
+<h6 id="前后序">前后序</h6>
+<p>可以参考下面的修改指针，如果你学过二叉树相关的知识，链表有顺序遍历和逆序遍历。
+「前序遍历容易改成不需要栈的递归，而后续遍历需要借助栈来完成」。 ######
+修改指针 比如<a
+href="https://leetcode.cn/problems/reverse-linked-list/">链表翻转</a>:
+常见的迭代版本为： <img src="../image/blog6/reverselist.jpg" />
+考虑prev-&gt;curr结构，如果curr-&gt;next=prev会导致next丢失，所以储存next=curr-&gt;next，此后curr-&gt;next,prev-&gt;next依次迭代即可。</p>
+<pre class="c"><code>struct ListNode* reverse(struct ListNode* head) {
+    struct ListNode* prev = NULL;
+    struct ListNode* curr = head;
+    while (curr) {
+        struct ListNode* next = curr-&gt;next;
+        curr-&gt;next = prev;
+        prev = curr;
+        curr = next;
+    }
+    return prev;
+}</code></pre>
+<p>当然我们还有递归版本的: 考虑<span
+class="math inline"><em>n</em><sub>1</sub>, <em>n</em><sub>2</sub>, ⋯, <em>n</em><sub><em>i</em> − 1</sub>, <em>n</em><sub><em>i</em></sub>, <em>n</em><sub><em>i</em> + 1</sub>, ⋯, <em>n</em><sub><em>k</em></sub>, <em>ϕ</em></span>结构，我们易得:
+<span
+class="math display"><em>n</em><sub><em>i</em></sub>.next.next = <em>n</em><sub><em>i</em></sub></span>
+这一递推关系，可以写出下面的代码</p>
+<pre class="c"><code>struct ListNode* reverse(struct ListNode *head)
+{
+        if (head == NULL || head-&gt;next == NULL)
+        return head;
+    struct ListNode* new = reverseList(head-&gt;next);
+    head-&gt;next-&gt;next = head;
+    head-&gt;next = NULL;
+    return new;
+}</code></pre>
