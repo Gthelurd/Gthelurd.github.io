@@ -2,7 +2,6 @@
 [《数字图像处理(第四版)》阅读随笔 ch4 (频率域滤波)](https://zhuanlan.zhihu.com/p/360557063)
 
 # 频率域滤波基础
-
 #### 频率域的其他特性
 
 由二维DFT公式：
@@ -238,3 +237,4 @@ H = freqz2(h,PQ(1),PQ(2));
 H1 = ifftshift(H);%ifftshift用于重排数据，以便使得原点位于频率域矩阵的左上角
 
 gs = imfilter(cover,h);%空间域滤波，默认情况下使用0
+```
